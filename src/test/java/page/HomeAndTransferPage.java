@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import static constant.Common.*;
 import static constant.HomePageLocator.*;
 
 public class HomeAndTransferPage extends BasePage {
@@ -58,7 +59,7 @@ public class HomeAndTransferPage extends BasePage {
     }
 
     public HomeAndTransferPage clickContinue() throws InterruptedException {
-        Thread.sleep(300);
+        Thread.sleep(500);
         this.click(By.cssSelector(CSS_CONTINUE));
         return this;
     }
@@ -140,18 +141,18 @@ public class HomeAndTransferPage extends BasePage {
     }
 
     public HomeAndTransferPage clickIndividual() throws InterruptedException {
-        Thread.sleep(1000);
-        this.click(By.xpath(INDIVIDUAL));
+        Thread.sleep(6000);
+        this.click(By.cssSelector(CSS_INDIVIDUAL));
         return this;
     }
 
     public HomeAndTransferPage clickAllIndoBank() {
-        this.click(By.xpath(ALL_INDO_BANK));
+        this.click(By.cssSelector(CSS_ALL_INDO_BANK));
         return this;
     }
 
     public HomeAndTransferPage clickLinkAja() {
-        this.click(By.xpath(INDO_LINK_AJA));
+        this.click(By.cssSelector(CSS_LINK_AJA));
         return this;
     }
 
@@ -225,18 +226,14 @@ public class HomeAndTransferPage extends BasePage {
         return this;
     }
 
-    public HomeAndTransferPage selectIndoBankBCA() {
-        this.click(By.xpath(INDO_BANK_LIST));
-        this.click(By.xpath(INDO_BANK_BCA));
+    public HomeAndTransferPage selectIndoBankByLocator(String bankLocator) {
+        this.click(By.cssSelector(CSS_BANK_NAME_SYMBOL));
+        this.click(By.cssSelector(bankLocator));
         return this;
     }
 
-    public HomeAndTransferPage scroll(By locatorScroll, int xOffset, int yOffset) throws InterruptedException{
-        Thread.sleep(300);
-        MobileElement element = (MobileElement) wait
-                .until(ExpectedConditions.visibilityOfElementLocated(locatorScroll));
-        this.swipe(element, xOffset, yOffset);
-        Thread.sleep(500);
+    public HomeAndTransferPage scrollDown(By locatorScroll, int xOffset, int yOffset) throws InterruptedException{
+        this.scroll(locatorScroll, xOffset, yOffset);
         return this;
     }
 
@@ -251,7 +248,7 @@ public class HomeAndTransferPage extends BasePage {
     }
 
     public HomeAndTransferPage clickSelectBank() {
-        this.click(By.cssSelector(CSS_SELECT_OPTION_CLICK));
+        this.click(By.cssSelector(CSS_SELECT_OPTION));
         return this;
     }
 
@@ -314,15 +311,31 @@ public class HomeAndTransferPage extends BasePage {
     }
 
     public HomeAndTransferPage clickCloseResult() {
-        this.click(By.cssSelector(CSS_CLOSE));
+        this.click(By.cssSelector(CSS_SAVE_SHARE));
         return this;
     }
 
+    public HomeAndTransferPage clickMenuButton() {
+        this.click(By.xpath(MENU_BUTTON));
+        return this;
+    }
+
+    public ConnectionPage clickConnectionInMenu() {
+        this.click(By.cssSelector(MENU_CONNECTION_CHOICE));
+        return new ConnectionPage(driver, wait);
+    }
+
     public void validateBankTransferResult(String firstname, String lastname, String amount, String country, String bankName) {
-        String beneficiaryResult = this.getTextByLocator(By.xpath(RESULT_TRANSFER_TO));
-        String bankLocationResult = this.getTextByLocator(By.xpath(RESULT_BANK_LOCATION));
-        String bankNameResult = this.getTextByLocator(By.xpath(RESULT_BANK_NAME));
-        String amountResult = this.getTextByLocator(By.xpath(RESULT_AMOUNT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(CSS_SAVE_SHARE)));
+        String nameCss = "android.widget.TextView[text=\"" + firstname + " " + lastname + "\"]";
+        String locationCss = "android.widget.TextView[text=\"" + country + "\"]";
+        String bankNameCss = "android.widget.TextView[text=\"" + bankName + "\"]";
+        String amountCss = "android.widget.TextView[text=\"" + "$" + amount + "\"]";
+
+        String beneficiaryResult = this.getTextByLocator(By.cssSelector(nameCss));
+        String bankLocationResult = this.getTextByLocator(By.cssSelector(locationCss));
+        String bankNameResult = this.getTextByLocator(By.cssSelector(bankNameCss));
+        String amountResult = this.getTextByLocator(By.cssSelector(amountCss));
 
         String beneficiaryNameCheck = firstname + " " + lastname;
         String amountCheck = "$" + amount;
@@ -334,7 +347,7 @@ public class HomeAndTransferPage extends BasePage {
     }
 
     public void validateLocalPaynowResult(String transferTo, String amount, boolean isMobile) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(CSS_CLOSE)));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(CSS_SAVE_SHARE)));
         String transferToCheck;
         if (isMobile) {
             transferToCheck = "+65" + transferTo;

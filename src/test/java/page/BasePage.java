@@ -88,4 +88,12 @@ public class BasePage {
         this.click(By.cssSelector(cssDate));
         this.click(By.xpath(DATE_OK));
     }
+    public void scroll(By locatorScroll, int xOffset, int yOffset) throws InterruptedException{
+        Thread.sleep(300);
+        MobileElement element = (MobileElement) wait
+                .until(ExpectedConditions.visibilityOfElementLocated(locatorScroll));
+        this.swipe(element, xOffset, yOffset);
+        Thread.sleep(500);
+    }
+
 }

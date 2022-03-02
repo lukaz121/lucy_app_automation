@@ -33,7 +33,7 @@ public class DataTest {
     public static final String LOCAL_BANK_DESCRIPTION = "Local bank transfer $";
     public static final String NRIC_NUMBER = "S8633338D";
     public static final String UEN_NUMBER = "201023709H";
-    public static final String INDO_BANK_ADDRESS = "Street 13; Building Friday";
+    public static final String INDO_BANK_ADDRESS = "1st Street ; Building Friday";
     public static final String BANK_ACC_NUMBER_16_NUMBER = "0966758897096675";
     public static final String BANK_ACC_NUMBER_10_NUMBER = "0966758897";
     public static final String BCA_DESC = "bank BCA Indo";
@@ -55,5 +55,6 @@ public class DataTest {
     public static final String NATIONALITY_SG = "Singapore";
     public static final String CITY_SG = "Singapore";
     public static final String CITY_VN = "Hanoi";
+    public static final String ADD_CONNECTION_SUCCESS = "This bank account has\nbeen added to your\nConnections.";
 
 }
