@@ -14,6 +14,7 @@ public class DataTest {
     public static final String POSTCODE = "122445";
     public static final String MOBILE_8_NUMBER = "68181888";
     public static final String MOBILE_10_NUMBER = "0966758897";
+    public static final String FULL_NAME = "Alvin Arulselvan";
     public static final String FIRST_NAME_MICHAEL = "Michael";
     public static final String LAST_NAME_SCHOFIELD = "Schofield";
     public static final String FIRST_NAME_ALVIN = "Alvin";

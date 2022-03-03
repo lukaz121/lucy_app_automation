@@ -1,14 +1,19 @@
 package test;
 
+import helper.ApiHelper;
+import helper.KycDocument;
+import helper.Response;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.*;
 import page.KycPage;
 import page.SignInPage;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -41,16 +46,21 @@ public class KYC {
     }
 
     @Test
-    public void basicTest() throws InterruptedException {
+    public void basicTest() throws IOException {
         System.out.println("===============START TESTING KYC===============");
         kycPage.clickDoKyc()
-                .inputName("Jun Hoang")
+                .inputName(FULL_NAME)
                 .selectDateOfBirth()
                 .selectNationality()
                 .inputAddress()
                 .takeSelfie()
                 .inputIDInfo();
-        Thread.sleep(5000);
+        ApiHelper kycApi = new ApiHelper();
+        KycDocument kycDoc = new KycDocument();
+        kycDoc.idCardFront = kycApi.getImageBase64("id_front.jpg");
+        kycDoc.imageCheckName = "id_front_2.jpg";
+        Response res = kycApi.kycAction(kycDoc);
+        Assert.assertEquals(res.statusCode, 200);
     }
 
     @AfterMethod

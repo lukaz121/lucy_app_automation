@@ -160,6 +160,32 @@ public class Connection {
         Assert.assertEquals(successText, ADD_CONNECTION_SUCCESS);
     }
 
+    @Test
+    public void addOverseaCashPayout() throws InterruptedException {
+        ConnectionPage connectionPage = homeAndTransferPage.clickMenuButton().clickConnectionInMenu();
+        ConnectionPage resultPage = connectionPage.clickAddConnectionIcon()
+                .choseTypeConnectionByLocator(CSS_TYPE_OVERSEAS_CASH_PAYOUT)
+                .clickCountryToTransferByLocator(CSS_PHILIPPINES)
+//                .clickIndividual()
+//                .selectPhilBankTransferByLocator(CSS_PHIL_BANK_BANCO_DE_ORO)
+//                .inputFirstnameSymbol(FIRST_NAME_MICHAEL)
+//                .inputLastnameSymbol(LAST_NAME_IKARIAM)
+//                .inputAccNumberSymbol(BANK_ACC_NUMBER_16_NUMBER)
+//                .clickIdentificationType()
+//                .selectIdentificationTypeByLocator(CSS_ID_TYPE_SOCIAL_SECURITY)
+//                .inputIdentificationValueSymbol(IDENTIFICATION_ID_1)
+//                .scrollDown(By.cssSelector(CSS_TRANSFER_DETAILS_TITLE), 100, -2500)
+//                .inputPhoneNumberSymbol(MOBILE_10_NUMBER)
+//                .inputOccupationSymbol(OCCUPATION_TESTER)
+//                .selectSourceIncomeSymbolByLocator(CSS_SOURCE_INCOME_BUSINESS)
+//                .selectPurposeCodeSymbolByLocator(CSS_PURPOSE_CODE_REAL_ESTATE_ABROAD)
+//                .selectRelationshipSymbolByLocator(CSS_RELATIONSHIP_BROTHER)
+                .clickValidate();
+
+        String successText = resultPage.getTextByLocator(By.cssSelector(CSS_ADD_SUCCESS));
+        Assert.assertEquals(successText, ADD_CONNECTION_SUCCESS);
+    }
+
     @AfterMethod
     public void teardown() {
         driver.quit();

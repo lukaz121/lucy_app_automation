@@ -42,7 +42,6 @@ public class KycPage extends BasePage {
         action.perform();
         this.click(By.xpath(YEAR));
         int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
-        System.out.println(month);
         if (month < 11) {
             for (int i = 0; i < 11 - month; i++) {
                 this.click(By.xpath(NEXT_MONTH));
