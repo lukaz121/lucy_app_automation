@@ -46,7 +46,7 @@ public class KYC {
     }
 
     @Test
-    public void basicTest() throws IOException {
+    public void kycWithInvalidIdCardImg() throws IOException {
         System.out.println("===============START TESTING KYC===============");
         kycPage.clickDoKyc()
                 .inputName(FULL_NAME)
@@ -61,6 +61,26 @@ public class KYC {
         kycDoc.imageCheckName = "id_front_2.jpg";
         Response res = kycApi.kycAction(kycDoc);
         Assert.assertEquals(res.statusCode, 200);
+        System.out.println("===============END TESTING KYC===============");
+    }
+
+    @Test
+    public void kycWithValidIdCardImg() throws IOException {
+        System.out.println("===============START TESTING KYC===============");
+        kycPage.clickDoKyc()
+                .inputName(FULL_NAME)
+                .selectDateOfBirth()
+                .selectNationality()
+                .inputAddress()
+                .takeSelfie()
+                .inputIDInfo();
+        ApiHelper kycApi = new ApiHelper();
+        KycDocument kycDoc = new KycDocument();
+        kycDoc.idCardFront = kycApi.getImageBase64("id_front.jpg");
+        kycDoc.imageCheckName = "id_front.jpg";
+        Response res = kycApi.kycAction(kycDoc);
+        Assert.assertEquals(res.statusCode, 200);
+        System.out.println("===============END TESTING KYC===============");
     }
 
     @AfterMethod
